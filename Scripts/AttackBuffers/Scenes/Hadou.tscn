@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bevr83iyqf75k"]
+
+[ext_resource type="Script" path="res://Scripts/AttackBuffers/Scripts/Hadou.cs" id="1_ucxji"]
+
+[node name="Hadou" type="Node"]
+script = ExtResource("1_ucxji")

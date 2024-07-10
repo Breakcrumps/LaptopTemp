@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://btaxtsh5p12ab"]
+
+[ext_resource type="Script" path="res://Scripts/AttackBuffers/Scripts/Tatsu.cs" id="1_lsalb"]
+
+[node name="Tatsu" type="Node"]
+script = ExtResource("1_lsalb")
