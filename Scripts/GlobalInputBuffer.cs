@@ -26,9 +26,7 @@ abstract partial class GlobalInputBuffer : Node {
     readonly string[] actions = ["Left", "Right", "Down"];
 
     readonly List<List<string>> buffer = [];
-
-    //////////*Properties*//////////
-
+    
     //////////*Delegates*//////////
     [Signal]
     internal delegate void CharacterPlayEventHandler(string anim);
