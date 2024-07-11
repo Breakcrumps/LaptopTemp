@@ -1,0 +1,223 @@
+[gd_scene load_steps=13 format=3 uid="uid://157x0k1xcww0"]
+
+[ext_resource type="Script" path="res://Characters/Job/Job.cs" id="1_3mggq"]
+[ext_resource type="Texture2D" uid="uid://yu1gbisr7kj2" path="res://Characters/Job/Job.png" id="2_ldte1"]
+[ext_resource type="PackedScene" uid="uid://bevr83iyqf75k" path="res://AttackBuffers/Scenes/Hadou.tscn" id="3_ihebm"]
+[ext_resource type="PackedScene" uid="uid://cr4tq6nkcbls" path="res://AttackBuffers/Scenes/Shoryu.tscn" id="4_kj1li"]
+[ext_resource type="PackedScene" uid="uid://btaxtsh5p12ab" path="res://AttackBuffers/Scenes/Tatsu.tscn" id="5_5gpr7"]
+
+[sub_resource type="Animation" id="Animation_eugov"]
+resource_name = "BackHadou"
+length = 0.200002
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("JobSprite:flip_v")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:CanMove")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_iehyn"]
+resource_name = "Hadou"
+length = 0.166668
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("JobSprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:CanMove")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.166667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_clfkh"]
+resource_name = "Half"
+length = 0.166669
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:CanMove")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("JobSprite:rotation")
+tracks/1/interp = 3
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0166667, 0.0833333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.24617, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_pqujg"]
+resource_name = "Shoryu"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("JobSprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0166667, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(4, 4), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:CanMove")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_q4ui4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("JobSprite:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("JobSprite:flip_v")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("JobSprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:CanMove")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("JobSprite:rotation")
+tracks/4/interp = 3
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_a3mee"]
+_data = {
+"BackHadou": SubResource("Animation_eugov"),
+"Hadou": SubResource("Animation_iehyn"),
+"Half": SubResource("Animation_clfkh"),
+"RESET": SubResource("Animation_q4ui4"),
+"Shoryu": SubResource("Animation_pqujg")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l78pw"]
+size = Vector2(38, 66)
+
+[node name="Job" type="CharacterBody2D"]
+script = ExtResource("1_3mggq")
+CanMove = true
+
+[node name="JobSprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_ldte1")
+hframes = 3
+vframes = 6
+
+[node name="JobPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_a3mee")
+}
+
+[node name="JobCollider" type="CollisionShape2D" parent="."]
+position = Vector2(5, 2)
+shape = SubResource("RectangleShape2D_l78pw")
+
+[node name="SpecialAttacks" type="Node" parent="."]
+
+[node name="Hadou" parent="SpecialAttacks" instance=ExtResource("3_ihebm")]
+
+[node name="Shoryu" parent="SpecialAttacks" instance=ExtResource("4_kj1li")]
+
+[node name="Tatsu" parent="SpecialAttacks" instance=ExtResource("5_5gpr7")]

@@ -3,7 +3,7 @@ using System.Linq;
 using Godot;
 using static Godot.Input;
 
-abstract partial class GlobalInputBuffer : Node {
+abstract partial class SpecialAttack : Node {
     //////////////////////////////
     //////////!Abstract!//////////
     //////////////////////////////
@@ -20,6 +20,9 @@ abstract partial class GlobalInputBuffer : Node {
     //////////!Concrete!//////////
     //////////////////////////////
 
+    //////////*Types*//////////
+    enum Lvl { One = 1, Two, Three, Four }
+
     //////////*Fields*//////////
     const int maxBuffer = 15;
 
@@ -27,9 +30,19 @@ abstract partial class GlobalInputBuffer : Node {
 
     readonly List<List<string>> buffer = [];
     
+    //////////*Properties*//////////
+    [Export] 
+    int Damage { get; set; }
+    [Export] 
+    int Block { get; set; }
+    [Export] 
+    Lvl Level { get; set; }
+
     //////////*Delegates*//////////
     [Signal]
     internal delegate void CharacterPlayEventHandler(string anim);
+    [Signal]
+    internal delegate void DealDamageEventHandler(int damage, int block, int level);
 
     //////////*Methods*//////////
     public override void _Process(double delta) {
@@ -47,6 +60,7 @@ abstract partial class GlobalInputBuffer : Node {
             if (a == Motions.Length - 1) {
                 if (buffer[b].Contains(Motions[^1]) && !buffer[b].Contains(Motions[^2])) {
                     EmitSignal("CharacterPlay", Animation);
+                    EmitSignal("DealDamage", Damage, Block, (int)Level);
                     return; }
                 continue; }
             if (buffer[b].Contains(Motions[a]) && !buffer[b].Contains(Motions[a+1])) {

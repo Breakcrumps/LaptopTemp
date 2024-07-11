@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cr4tq6nkcbls"]
 
-[ext_resource type="Script" path="res://Scripts/AttackBuffers/Scripts/Shoryu.cs" id="1_nknt5"]
+[ext_resource type="Script" path="res://AttackBuffers/Scripts/Shoryu.cs" id="1_nknt5"]
 
 [node name="Shoryu" type="Node"]
 script = ExtResource("1_nknt5")

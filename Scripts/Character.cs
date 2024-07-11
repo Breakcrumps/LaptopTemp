@@ -11,7 +11,9 @@ abstract partial class Character : CharacterBody2D {
     //////////*Properties*//////////
     private protected abstract int Fws { get; }
     private protected abstract int Bws { get; }
+    private protected abstract int Health { get; set; }
     private protected abstract int Gravity { get; }
+    private protected abstract int JumpDuration { get; }
 
     private protected abstract AnimationPlayer Player { get; }
 
@@ -26,11 +28,15 @@ abstract partial class Character : CharacterBody2D {
     //////////*Fields*//////////
     readonly List<string> animations = [];
 
+    //////////*Properties*//////////
+    int VertSpeed { get { return -JumpDuration/2*Gravity; } }
+
     //////////*Methods*//////////
     public override void _Ready() {
         CanMove = true;
-        foreach (GlobalInputBuffer n in GetNode<Node>("AttackBuffers").GetChildren().Cast<GlobalInputBuffer>())
+        foreach (SpecialAttack n in GetNode<Node>("AttackBuffers").GetChildren().Cast<SpecialAttack>()) {
             n.CharacterPlay += (anim) => { Player.Play(anim); CanMove = false; };
+            n.DealDamage += TakeDamage; }
         animations.AddRange(Player.GetAnimationList()); }
 
     public override void _PhysicsProcess(double delta) {
@@ -45,6 +51,20 @@ abstract partial class Character : CharacterBody2D {
         if (IsActionPressed("Left") != IsActionPressed("Right")) {
             if (IsActionPressed("Left"))  velocity.X -= Bws;
             if (IsActionPressed("Right"))  velocity.X += Fws; }
+        if (IsActionJustPressed("Jump"))
+            velocity.Y = VertSpeed;
         Velocity = velocity;
         MoveAndSlide(); }
+
+    internal void TakeDamage(int damage, int block, int level) {
+        switch (IsActionPressed("Right")) {
+            case true:
+                Health -= damage;
+                goto default;
+            case false:
+                Health -= block;
+                goto default;
+            default:
+                if (Health <= 0)  QueueFree();
+                break; } }
 }

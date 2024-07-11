@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cacl33i2gvr4e"
-path="res://.godot/imported/kissclipart-sprite-clipart-fizzy-drinks-sprite-lemon-lime-drin-3ee3a0986f728ff2.jpg-9caebc58aec69fa4eb63489afbf4372f.ctex"
+uid="uid://yu1gbisr7kj2"
+path="res://.godot/imported/Job.png-8f18bce396e474dc113f8e20c1d47e9e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Characters/NullChar/kissclipart-sprite-clipart-fizzy-drinks-sprite-lemon-lime-drin-3ee3a0986f728ff2.jpg"
-dest_files=["res://.godot/imported/kissclipart-sprite-clipart-fizzy-drinks-sprite-lemon-lime-drin-3ee3a0986f728ff2.jpg-9caebc58aec69fa4eb63489afbf4372f.ctex"]
+source_file="res://Characters/Job/Job.png"
+dest_files=["res://.godot/imported/Job.png-8f18bce396e474dc113f8e20c1d47e9e.ctex"]
 
 [params]
 
