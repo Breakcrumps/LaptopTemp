@@ -17,7 +17,7 @@ abstract partial class NormalAttack : Area2D {
     //////////////////////////////
     
     //////////*Types*//////////
-    enum Lvl { One = 1, Two, Three, Four}
+    enum Lvl { One = 1, Two, Three, Four }
 
     //////////*Properties*//////////
     [Export]
