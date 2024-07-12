@@ -11,7 +11,7 @@ partial class Job : Character {
     //////////*Properties*//////////
     private protected override int Fws { get { return _fws; } }
     private protected override int Bws { get { return _bws; } }
-    private protected override int Health {
+    internal override int Health {
         get { return _health; }
         set { _health = value; } }
     private protected override int Gravity { get { return _gravity; } }

@@ -1,5 +1,58 @@
 using Godot;
+using static Godot.Input;
 
-abstract partial class Attack : Node {
+abstract partial class NormalAttack : Area2D {
+    //////////////////////////////
+    //////////!Abstract!//////////
+    //////////////////////////////
     
+    //////////*Properties*//////////
+    private protected abstract string Animation { get; }   
+    private protected abstract string Button { get; }
+
+
+
+    //////////////////////////////
+    //////////!Concrete!//////////
+    //////////////////////////////
+    
+    //////////*Types*//////////
+    enum Lvl { One = 1, Two, Three, Four}
+
+    //////////*Properties*//////////
+    [Export]
+    int Damage { get; set; }
+    [Export]
+    int Block { get; set; }
+    [Export]
+    Lvl Level { get; set; }
+
+    CollisionShape2D Hitbox { get { return GetChild<CollisionShape2D>(0); } } 
+
+    //////////*Delegates*//////////
+    [Signal]
+    internal delegate void CharacterPlayEventHandler(string anim);
+
+    //////////*Methods*//////////
+    public override void _Ready() {
+        BodyEntered += DealDamage;
+        Hitbox.Disabled = true; }
+    
+    public override void _PhysicsProcess(double delta) {
+        if (IsActionJustPressed(Button))
+            EmitSignal("CharacterPlay", Animation); }
+    
+    void DealDamage(Node2D body) {
+        Character b = (Character)body;
+        Hitbox.Disabled = true;
+        switch (IsActionPressed("Right")) {
+            case true:
+                b.Health -= Damage;
+                goto default;
+            case false:
+                b.Health -= Block;
+                goto default;
+            default:
+                if (b.Health <= 0)  b.QueueFree();
+                break; } }
 }

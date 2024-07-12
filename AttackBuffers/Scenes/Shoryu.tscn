@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" path="res://AttackBuffers/Scripts/Shoryu.cs" id="1_nknt5"]
 
-[node name="Shoryu" type="Node"]
+[node name="Shoryu" type="Area2D"]
 script = ExtResource("1_nknt5")

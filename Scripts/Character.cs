@@ -11,7 +11,7 @@ abstract partial class Character : CharacterBody2D {
     //////////*Properties*//////////
     private protected abstract int Fws { get; }
     private protected abstract int Bws { get; }
-    private protected abstract int Health { get; set; }
+    internal abstract int Health { get; set; }
     private protected abstract int Gravity { get; }
     private protected abstract int JumpDuration { get; }
 
@@ -34,9 +34,10 @@ abstract partial class Character : CharacterBody2D {
     //////////*Methods*//////////
     public override void _Ready() {
         CanMove = true;
-        foreach (SpecialAttack n in GetNode<Node>("AttackBuffers").GetChildren().Cast<SpecialAttack>()) {
+        foreach (SpecialAttack n in GetNode<Node>("SpecialAttacks").GetChildren().Cast<SpecialAttack>())
             n.CharacterPlay += (anim) => { Player.Play(anim); CanMove = false; };
-            n.DealDamage += TakeDamage; }
+        foreach (NormalAttack n in GetNode<Node>("NormalAttacks").GetChildren().Cast<NormalAttack>())
+            n.CharacterPlay += (anim) => { Player.Play(anim); CanMove = false; };
         animations.AddRange(Player.GetAnimationList()); }
 
     public override void _PhysicsProcess(double delta) {
@@ -51,20 +52,13 @@ abstract partial class Character : CharacterBody2D {
         if (IsActionPressed("Left") != IsActionPressed("Right")) {
             if (IsActionPressed("Left"))  velocity.X -= Bws;
             if (IsActionPressed("Right"))  velocity.X += Fws; }
-        if (IsActionJustPressed("Jump"))
+        if (IsActionJustPressed("Jump")) {
             velocity.Y = VertSpeed;
+            Velocity = velocity;
+            MoveAndSlide();
+            return; }
         Velocity = velocity;
+        if (Velocity != Vector2.Zero)  Player.Play("Walk");
+        else  Player.Play("Idle");
         MoveAndSlide(); }
-
-    internal void TakeDamage(int damage, int block, int level) {
-        switch (IsActionPressed("Right")) {
-            case true:
-                Health -= damage;
-                goto default;
-            case false:
-                Health -= block;
-                goto default;
-            default:
-                if (Health <= 0)  QueueFree();
-                break; } }
 }

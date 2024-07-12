@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" path="res://AttackBuffers/Scripts/Tatsu.cs" id="1_lsalb"]
 
-[node name="Tatsu" type="Node"]
+[node name="Tatsu" type="Area2D"]
 script = ExtResource("1_lsalb")

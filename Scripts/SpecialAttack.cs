@@ -3,7 +3,7 @@ using System.Linq;
 using Godot;
 using static Godot.Input;
 
-abstract partial class SpecialAttack : Node {
+abstract partial class SpecialAttack : Area2D {
     //////////////////////////////
     //////////!Abstract!//////////
     //////////////////////////////
@@ -38,14 +38,18 @@ abstract partial class SpecialAttack : Node {
     [Export] 
     Lvl Level { get; set; }
 
+    CollisionShape2D Hitbox { get { return GetChild<CollisionShape2D>(0); } } 
+
     //////////*Delegates*//////////
     [Signal]
     internal delegate void CharacterPlayEventHandler(string anim);
-    [Signal]
-    internal delegate void DealDamageEventHandler(int damage, int block, int level);
 
     //////////*Methods*//////////
-    public override void _Process(double delta) {
+    public override void _Ready() {
+        BodyEntered += DealDamage;
+        Hitbox.Disabled = true; }
+
+    public override void _PhysicsProcess(double delta) {
         List<string> frameList = [];
         frameList.AddRange(actions.Where(str => IsActionPressed(str)));
         buffer.Add(frameList);
@@ -60,7 +64,6 @@ abstract partial class SpecialAttack : Node {
             if (a == Motions.Length - 1) {
                 if (buffer[b].Contains(Motions[^1]) && !buffer[b].Contains(Motions[^2])) {
                     EmitSignal("CharacterPlay", Animation);
-                    EmitSignal("DealDamage", Damage, Block, (int)Level);
                     return; }
                 continue; }
             if (buffer[b].Contains(Motions[a]) && !buffer[b].Contains(Motions[a+1])) {
@@ -68,4 +71,18 @@ abstract partial class SpecialAttack : Node {
                     return;
                 Flags[a] = true;
                 a += 1; } } }
+        
+    void DealDamage(Node2D body) {
+        Character b = (Character)body;
+        Hitbox.Disabled = true;
+        switch (IsActionPressed("Right")) {
+            case true:
+                b.Health -= Damage;
+                goto default;
+            case false:
+                b.Health -= Block;
+                goto default;
+            default:
+                if (b.Health <= 0)  b.QueueFree();
+                break; } }
 }
