@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "C:/Hacker_Shit/Godot/Godot_v4.3-beta2_mono/Godot_v4.3-beta2_mono_win64.exe",
+            "program": "D:/Godot/Godot_v4.3-beta2_mono_win64/Godot_v4.3-beta2_mono_win64.exe",
             "args": ["--debug-collisions", "--print-fps"],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,

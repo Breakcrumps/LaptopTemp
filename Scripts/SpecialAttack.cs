@@ -38,7 +38,7 @@ abstract partial class SpecialAttack : Area2D {
     [Export] 
     Lvl Level { get; set; }
 
-    CollisionShape2D Hitbox { get { return GetChild<CollisionShape2D>(0); } } 
+    CollisionShape2D Hitbox => (CollisionShape2D)GetChildren().Where(x => x is CollisionShape2D).Single();
 
     //////////*Delegates*//////////
     [Signal]

@@ -46,12 +46,12 @@ for classes. Use primary constructors when possible. */
     [Export] 
     Lvl ExportLvl { get; set; } // Also exports at the top of properties.
 
-    int CalculatedValue { get { return namedField * 2 + 1; } }
-    // Follow conventions on mathematical operations.
+    int CalculatedValue => namedField * 2 + 1;
+    // Follow conventions on mathematical operations. Use => to realise one line get-s and set-s.
 
-    AnimationPlayer Player { get { return GetChild<AnimationPlayer>(0); } }
-    // Prioritise unnamed calls when working with nodes.
-    //! AND TYPE ALL YOUR SHIT. I'M CRAZY LIKE THAT.
+    AnimationPlayer Player => (AnimationPlayer)GetChildren().Where(x => x is AnimationPlayer).Single();
+    // Prioritise unnamed calls when working with nodes. 
+    // AND YES, this is rather fucked. What am I to do?
 
     //////////*Delegates*//////////
     [Signal]

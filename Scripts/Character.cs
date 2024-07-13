@@ -5,23 +5,6 @@ using System.Linq;
 
 abstract partial class Character : CharacterBody2D {
     //////////////////////////////
-    //////////!Abstract!//////////
-    //////////////////////////////
-
-    //////////*Properties*//////////
-    private protected abstract int Fws { get; }
-    private protected abstract int Bws { get; }
-    internal abstract int Health { get; set; }
-    private protected abstract int Gravity { get; }
-    private protected abstract int JumpDuration { get; }
-
-    private protected abstract AnimationPlayer Player { get; }
-
-    [Export]
-    internal bool CanMove { get; set; }
-
-
-    //////////////////////////////
     //////////!Concrete!//////////
     //////////////////////////////
     
@@ -29,7 +12,24 @@ abstract partial class Character : CharacterBody2D {
     readonly List<string> animations = [];
 
     //////////*Properties*//////////
-    int VertSpeed { get { return -JumpDuration/2*Gravity; } }
+    [Export]
+    int Fws { get; set; }
+    [Export]
+    int Bws { get; set; }
+    [Export]
+    internal int Health { get; set; }
+    [Export]
+    int Gravity { get; set; }
+    [Export]
+    int JumpDuration { get; set; }
+
+    [Export]
+    bool CanMove { get; set; }
+
+    AnimationPlayer Player => (AnimationPlayer)GetChildren().Where(x => x is AnimationPlayer).Single();
+    // Yes, this is fucked. Welcome to fucking C#.
+    
+    int VertSpeed => -JumpDuration/2*Gravity;
 
     //////////*Methods*//////////
     public override void _Ready() {
