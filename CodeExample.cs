@@ -3,7 +3,8 @@ using static System.Console;
 using Godot;
 using System.Linq;
 
-abstract partial class ChildClass(int neededInt, string neededString) : Area2D {
+abstract partial class ChildClass(int neededInt, string neededString) : Area2D { /*PascalCase ->
+for classes. Use primary constructors when possible. */
 	//////////////////////////////
     //////////!Abstract!//////////
     //////////////////////////////
@@ -19,8 +20,8 @@ abstract partial class ChildClass(int neededInt, string neededString) : Area2D {
     //////////////////////////////
 
 	//////////*Types*//////////
- 	private enum Lvl { One = 1, Two, Three, Four } /* Prioritise one line enums if range of values is short. -> 
-    PascalCase or convenient abbreviations for types. */
+ 	private enum Lvl { One = 1, Two, Three, Four } /* Prioritise one line enums if ->
+    range of values is short. PascalCase or convenient abbreviations for types. */
 
 	//////////*Fields*//////////
   	const int namedField = 0; /* camelCase for fields. ->
@@ -35,19 +36,22 @@ abstract partial class ChildClass(int neededInt, string neededString) : Area2D {
     //! When using fields under properties try to name them the same: _health -> Health.
 
 	readonly List<string> namedList = []; // Prioritise new shortened collection constructor.
-    readonly List<List<int>> namedListList = []; // Always type shit. Helps to guess what you had in mind.
+    readonly List<List<int>> namedListList = [];
+    // Always type shit. Helps to guess what you had in mind.
 	readonly string[] namedArray = ["", "", ""];
  	
     //////////*Properties*//////////
     [Export] 
-    int ExportInt { get; set; } // Leave property attributes above them. Also exports at the top of properties.
+    int ExportInt { get; set; } // Leave property attributes above them.
     [Export] 
-    Lvl ExportLvl { get; set; }
+    Lvl ExportLvl { get; set; } // Also exports at the top of properties.
 
-    int CalculatedValue { get { return namedField * 2 + 1; } } // Follow conventions on mathematical operations.
+    int CalculatedValue { get { return namedField * 2 + 1; } }
+    // Follow conventions on mathematical operations.
 
     AnimationPlayer Player { get { return GetChild<AnimationPlayer>(0); } }
-    // Prioritise unnamed calls when working with nodes. AND TYPE ALL YOUR SHIT. I'M CRAZY LIKE THAT.
+    // Prioritise unnamed calls when working with nodes.
+    //! AND TYPE ALL YOUR SHIT. I'M CRAZY LIKE THAT.
 
     //////////*Delegates*//////////
     [Signal]
@@ -58,17 +62,18 @@ abstract partial class ChildClass(int neededInt, string neededString) : Area2D {
     public override void _Ready() { // I *HATE* Intellisense. Only mark system overrides as public. Watch the braces.
         FunnyDelegate += DoStuff;
         BodyEntered += YameteKudasai;
-        Renamed += () => WriteLine($"namedList equals {namedList}"); /* Interpolate. Lambda when delegate assigned expression
-        is short*/
+        Renamed += () => WriteLine($"namedList equals {namedList}"); /* Interpolate. ->
+        Lambda when delegate assigned expression is short*/
         namedList.AddRange(Player.GetAnimationList()); /* Use Where(), AddRange(),
         GetRange(), ForEach(), Any(), All(), etc. */
         int i = 1; } // Why did I do that? Space and Python. I'm crazy like that.
-    //! Use braces like these everywhere except classes - if-s, switch-es and loops included. (but try to make loops ->
-    //! with one line techniques.
+    //! Use braces like these everywhere except classes - if-s, switch-es and loops included...
+    // ...(but try to make loops with one line techniques.)
     
     void DoStuff(string str) {
-        bool[] bools = new bool[3].Where(x => x == false).ToArray(); /* May initialise collections with new, ->
-        but only when required. Also TYPE EVERYTHING I'M NOT JOKING I'LL DO SOMETHING IF I SEE VAR ANYWHERE. */
+        bool[] bools = new bool[3].Where(x => x == false).ToArray();
+        /* May initialise collections with new, but only when required. */
+        //!Also TYPE EVERYTHING I'M NOT JOKING I'LL DO SOMETHING IF I SEE VAR ANYWHERE. 
         WriteLine(bools.Where(x => x)); }
 
     void YameteKudasai(Node2D body) { // When realising system events follow parameter patterns exactly...
