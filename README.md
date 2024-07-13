@@ -18,6 +18,9 @@ It is OK to make every class partial as we never know how we might need it to in
 Don't specify types in member names, except interfaces: `IPascalCase`.
 When using fields under properties try to name them the same: `_health` -> `Health`.
 Prioritise LINQ and other one line techniques as I've tested them to be equally or more performant in most appropriate contexts.
+When confronted with choice to place or not to place curly brackets, don't.
+Prioritise `for` for `List` and `foreach` for `Array`.
+Prioritise system instruments over the Godot ones.
 
 
 Code format: [here](CodeExample.cs)
