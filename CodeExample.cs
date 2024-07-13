@@ -20,14 +20,16 @@ abstract partial class ChildClass(int neededInt, string neededString) : Area2D {
     //////////////////////////////
 
 	//////////*Types*//////////
- 	private enum Lvl { One = 1, Two, Three, Four } /* Prioritise one line enums if ->
-    range of values is short. PascalCase or convenient abbreviations for types. */
+ 	private enum Lvl { One = 1, Two, Three, Four } // PascalCase or convenient abbreviations for types.
+    // Prioritise one line enums if the range of values is short.
 
 	//////////*Fields*//////////
   	const int namedField = 0; // camelCase for fields.
-    // Comment numbers as numbers: "This field equals 0" - for readability.
+    /* Comment numbers as numbers:
+    "This field equals 0" - right.
+    "This field equals zero" - wrong. */
   	const int _namedFieldUnderProperty = 0; // Only underscore fields under a property.
-    //! When using fields under properties try to name them the same: _health -> Health.
+    //? When using fields under properties try to name them the same: _health -> Health.
 
 	readonly List<string> namedList = []; // Prioritise new shortened collection constructor.
     readonly List<List<int>> namedListList = [];
@@ -38,14 +40,14 @@ abstract partial class ChildClass(int neededInt, string neededString) : Area2D {
     [Export] 
     int ExportInt { get; set; } // Leave property attributes above them.
     [Export] 
-    Lvl ExportLvl { get; set; } // Also exports at the top of properties.
+    Lvl ExportLvl { get; set; } // Also exports at the top of *Properties* section.
 
     int CalculatedValue => namedField * 2 + 1;
     // Follow conventions on mathematical operations. Use => to realise one line get-s and set-s.
 
     AnimationPlayer Player => (AnimationPlayer)GetChildren().Where(x => x is AnimationPlayer).Single();
     // Prioritise unnamed calls when working with nodes. 
-    // AND YES, this is rather fucked. What am I to do?
+    //? AND YES, this is rather fucked. What am I to do?
 
     //////////*Delegates*//////////
     [Signal]
@@ -53,21 +55,21 @@ abstract partial class ChildClass(int neededInt, string neededString) : Area2D {
     // Doncha forget EventHandler suffix for Godot signals.
 
     //////////*Methods*//////////
-    public override void _Ready() { // I *HATE* Intellisense. Only mark system overrides as public. Watch the braces.
+    public override void _Ready() { // I *HATE* Intellisense. Mark only system overrides as public. Watch the braces.
         FunnyDelegate += DoStuff;
         BodyEntered += YameteKudasai;
         Renamed += () => WriteLine($"namedList equals {namedList}"); // Interpolate.
         // Lambda when delegate assigned expression is short
-        namedList.AddRange(Player.GetAnimationList()); /* Use Where(), AddRange(),
+        namedList.AddRange(Player.GetAnimationList()); /* Use Where(), AddRange(), ->
         GetRange(), ForEach(), Any(), All(), etc. */
         WriteLine("I come"); } // Why did I do that? Space and Python. I'm crazy like that.
-    //! Use braces like these everywhere except classes - if-s, switch-es and loops included...
+    //? Use braces like these everywhere except classes - if-s, switch-es and loops included...
     // ...(but try to make loops with one line techniques.)
     
     void DoStuff(string str) {
         bool[] bools = new bool[3].Where(x => x == false).ToArray();
-        /* May initialise collections with new, but only when required. */
-        //!Also TYPE EVERYTHING I'M NOT JOKING I'LL DO SOMETHING IF I SEE VAR ANYWHERE. 
+        // May initialise collections with new, but only when required.
+        //! Also TYPE EVERYTHING I'M NOT JOKING I'LL DO SOMETHING IF I SEE VAR ANYWHERE. 
         WriteLine(bools.Where(x => x)); }
 
     void YameteKudasai(Node2D body) { // When realising system events follow parameter patterns exactly...
