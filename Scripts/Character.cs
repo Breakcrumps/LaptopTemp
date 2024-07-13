@@ -34,10 +34,10 @@ abstract partial class Character : CharacterBody2D {
     //////////*Methods*//////////
     public override void _Ready() {
         CanMove = true;
-        foreach (SpecialAttack n in GetNode<Node>("SpecialAttacks").GetChildren().Cast<SpecialAttack>())
-            n.CharacterPlay += (anim) => { Player.Play(anim); CanMove = false; };
-        foreach (NormalAttack n in GetNode<Node>("NormalAttacks").GetChildren().Cast<NormalAttack>())
-            n.CharacterPlay += (anim) => { Player.Play(anim); CanMove = false; };
+        foreach (SpecialAttack special in GetNode<Node>("SpecialAttacks").GetChildren().Cast<SpecialAttack>())
+            special.CharacterPlay += (anim) => { Player.Play(anim); CanMove = false; };
+        foreach (NormalAttack normal in GetNode<Node>("NormalAttacks").GetChildren().Cast<NormalAttack>())
+            normal.CharacterPlay += (anim) => { Player.Play(anim); CanMove = false; };
         animations.AddRange(Player.GetAnimationList()); }
 
     public override void _PhysicsProcess(double delta) {

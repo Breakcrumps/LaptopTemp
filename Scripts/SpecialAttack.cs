@@ -67,22 +67,23 @@ abstract partial class SpecialAttack : Area2D {
                     return; }
                 continue; }
             if (buffer[b].Contains(Motions[a]) && !buffer[b].Contains(Motions[a+1])) {
-                if (ForbiddenActions.Any(a => buffer.GetRange(0, b+1).Any(x => x.Contains(a))))
+                if (ForbiddenActions.Any(forbiddenAction =>
+                    buffer.GetRange(0, b+1).Any(frame => frame.Contains(forbiddenAction))))
                     return;
                 Flags[a] = true;
                 a += 1; } } }
         
     void DealDamage(Node2D body) {
-        Character b = (Character)body;
+        Character intruder = (Character)body;
         Hitbox.Disabled = true;
         switch (IsActionPressed("Right")) {
             case true:
-                b.Health -= Damage;
+                intruder.Health -= Damage;
                 goto default;
             case false:
-                b.Health -= Block;
+                intruder.Health -= Block;
                 goto default;
             default:
-                if (b.Health <= 0)  b.QueueFree();
+                if (intruder.Health <= 0)  intruder.QueueFree();
                 break; } }
 }
