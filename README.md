@@ -9,7 +9,6 @@ All fields are private.
 Never type `private`, unless it matters.
 Most of collections are readonly, most of valuable fields are const.
 Prioritise empty collections over null.
-All classes are private.
 Try to use `using static` every time you have to reference a system class - this helps to assert what you need in this file faster and debloats the code.
 Leave two empty lines at the top of the file when not using libraries.
 Never use `var`, always explicitely type code even when using constructors or creating a variable containing explicit casts.
