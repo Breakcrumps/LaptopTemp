@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using static System.Console;
-using Godot;
 using System.Linq;
+using static System.Console; // When using system classes try to static include them.
+using Godot;
 
-abstract partial class ChildClass(int neededInt, string neededString) : Area2D { /*PascalCase ->
-for classes. Use primary constructors when possible. */
+abstract partial class ChildClass(int neededInt, string neededString) : Area2D { //PascalCase for classes.
+// Use primary constructors when possible.
 	//////////////////////////////
     //////////!Abstract!//////////
     //////////////////////////////
@@ -24,15 +24,9 @@ for classes. Use primary constructors when possible. */
     range of values is short. PascalCase or convenient abbreviations for types. */
 
 	//////////*Fields*//////////
-  	const int namedField = 0; /* camelCase for fields. ->
-    Comment numbers as numbers: "This field equals 0" - for readability. */
-  	const int _namedFieldUnderProperty = 0; /* Only underscore fields under a property. ->
-    This allows, when working with abstract realisations, ->
-    to bring all the properties to the end of the file and still see that the field belongs to one, -> 
-    which is good for stats checking as all the fields are at the top of the file, ->
-    and all the "messengers" are at the bottom. ->
-    Not gonna realise anything here, just pretend like this field is tied to an override ->
-    property NamedFieldUnderProperty { get; }. */
+  	const int namedField = 0; // camelCase for fields.
+    // Comment numbers as numbers: "This field equals 0" - for readability.
+  	const int _namedFieldUnderProperty = 0; // Only underscore fields under a property.
     //! When using fields under properties try to name them the same: _health -> Health.
 
 	readonly List<string> namedList = []; // Prioritise new shortened collection constructor.
@@ -62,11 +56,11 @@ for classes. Use primary constructors when possible. */
     public override void _Ready() { // I *HATE* Intellisense. Only mark system overrides as public. Watch the braces.
         FunnyDelegate += DoStuff;
         BodyEntered += YameteKudasai;
-        Renamed += () => WriteLine($"namedList equals {namedList}"); /* Interpolate. ->
-        Lambda when delegate assigned expression is short*/
+        Renamed += () => WriteLine($"namedList equals {namedList}"); // Interpolate.
+        // Lambda when delegate assigned expression is short
         namedList.AddRange(Player.GetAnimationList()); /* Use Where(), AddRange(),
         GetRange(), ForEach(), Any(), All(), etc. */
-        int i = 1; } // Why did I do that? Space and Python. I'm crazy like that.
+        WriteLine("I come"); } // Why did I do that? Space and Python. I'm crazy like that.
     //! Use braces like these everywhere except classes - if-s, switch-es and loops included...
     // ...(but try to make loops with one line techniques.)
     
