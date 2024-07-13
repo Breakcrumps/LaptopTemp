@@ -25,7 +25,7 @@ abstract partial class ChildClass(int neededInt, string neededString) : Area2D {
 	//////////*Fields*//////////
   	const int namedField = 0; /* camelCase for fields. ->
     Comment numbers as numbers: "This field equals 0" - for readability. */
-  	const int _namedFieldUnderProperty = 0; /* Underscore only fields under a property. ->
+  	const int _namedFieldUnderProperty = 0; /* Only underscore fields under a property. ->
     This allows, when working with abstract realisations, ->
     to bring all the properties to the end of the file and still see that the field belongs to one, -> 
     which is good for stats checking as all the fields are at the top of the file, ->
