@@ -55,7 +55,8 @@ abstract partial class ChildClass(int neededInt, string neededString) : Area2D {
     // Doncha forget EventHandler suffix for Godot signals.
 
     //////////*Methods*//////////
-    public override void _Ready() { // I *HATE* Intellisense. Mark only system overrides as public. Watch the braces.
+    public override void _Ready() { // I *HATE* Intellisense.
+    // Mark only system overrides as public. Watch the braces.
         FunnyDelegate += DoStuff;
         BodyEntered += YameteKudasai;
         Renamed += () => WriteLine($"namedList equals {namedList}"); // Interpolate.
@@ -73,5 +74,7 @@ abstract partial class ChildClass(int neededInt, string neededString) : Area2D {
         WriteLine(bools.Where(x => x)); }
 
     void YameteKudasai(Node2D body) { // When realising system events follow parameter patterns exactly...
-        var c = (Character)body;  /* ...and cast with a variable. */ }
+        var c = (Character)body;  // ...and cast with a variable.
+        /* Variable names can be one-letter or abbreviated. ->
+        Just make sure it's easy to follow. */ }
 }
