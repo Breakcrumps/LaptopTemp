@@ -58,8 +58,8 @@ abstract partial class SpecialAttack : Area2D {
     
     void AttackBuffer() {
         if (!IsActionJustPressed(Button))  return;
-        bool[] Flags = new bool[Motions.Length - 1].Where(x => x == false).ToArray();
-        int a = 0;
+        var Flags = new bool[Motions.Length - 1].Where(x => x == false).ToArray();
+        var a = 0;
         for (int b = 0; b < buffer.Count; b++) {
             if (a == Motions.Length - 1) {
                 if (buffer[b].Contains(Motions[^1]) && !buffer[b].Contains(Motions[^2])) {

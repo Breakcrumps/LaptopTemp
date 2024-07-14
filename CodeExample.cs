@@ -59,7 +59,7 @@ abstract partial class ChildClass(int neededInt, string neededString) : Area2D {
         FunnyDelegate += DoStuff;
         BodyEntered += YameteKudasai;
         Renamed += () => WriteLine($"namedList equals {namedList}"); // Interpolate.
-        // Lambda when delegate assigned expression is short
+        // Lambda when delegate assigned expression is short.
         namedList.AddRange(Player.GetAnimationList()); /* Use Where(), AddRange(), ->
         GetRange(), ForEach(), Any(), All(), etc. */
         WriteLine("I come"); } // Why did I do that? Space and Python. I'm crazy like that.
@@ -67,11 +67,11 @@ abstract partial class ChildClass(int neededInt, string neededString) : Area2D {
     // ...(but try to make loops with one line techniques.)
     
     void DoStuff(string str) {
-        bool[] bools = new bool[3].Where(x => x == false).ToArray();
+        var bools = new bool[3].Where(x => x == false).ToArray();
         // May initialise collections with new, but only when required.
-        //! Also TYPE EVERYTHING I'M NOT JOKING I'LL DO SOMETHING IF I SEE VAR ANYWHERE. 
+        // Pay attention: declaration on the right contains verbose type information.
         WriteLine(bools.Where(x => x)); }
 
     void YameteKudasai(Node2D body) { // When realising system events follow parameter patterns exactly...
-        Character c = (Character)body;  /* ...and cast with a variable. */ }
+        var c = (Character)body;  /* ...and cast with a variable. */ }
 }
