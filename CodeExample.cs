@@ -63,7 +63,7 @@ abstract partial class ChildClass(int neededInt, string neededString) : Area2D {
         // Lambda when delegate assigned expression is short.
         namedList.AddRange(Player.GetAnimationList()); /* Use Where(), AddRange(), ->
         GetRange(), ForEach(), Any(), All(), etc. */
-        WriteLine("I come"); } // Why did I do that? Space and Python. I'm crazy like that.
+        WriteLine("I come"); }
     //? Use braces like these everywhere except classes - if-s, switch-es and loops included...
     // ...(but try to make loops with one line techniques.)
     
