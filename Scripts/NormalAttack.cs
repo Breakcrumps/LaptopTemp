@@ -45,7 +45,7 @@ abstract partial class NormalAttack : Area2D {
     
     void DealDamage(Node2D body) {
         Character b = (Character)body;
-        // Hitbox.Disabled = true;
+        Hitbox.Disabled = true;
         switch (IsActionPressed("Right")) {
             case true:
                 b.Health -= Damage;
