@@ -325,7 +325,7 @@ libraries = {
 position = Vector2(5, 2)
 shape = SubResource("RectangleShape2D_l78pw")
 
-[node name="SpecialAttacks" type="Node" parent="."]
+[node name="SpecialAttacks" type="Node2D" parent="."]
 
 [node name="Hadou" parent="SpecialAttacks" instance=ExtResource("3_ihebm")]
 
@@ -339,7 +339,7 @@ shape = SubResource("RectangleShape2D_l78pw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SpecialAttacks/Tatsu"]
 
-[node name="NormalAttacks" type="Node" parent="."]
+[node name="NormalAttacks" type="Node2D" parent="."]
 
 [node name="nHP" parent="NormalAttacks" instance=ExtResource("6_uafns")]
 

@@ -34,9 +34,9 @@ abstract partial class Character : CharacterBody2D {
     //////////*Methods*//////////
     public override void _Ready() {
         CanMove = true;
-        foreach (SpecialAttack special in GetNode<Node>("SpecialAttacks").GetChildren().Cast<SpecialAttack>())
+        foreach (SpecialAttack special in GetNode<Node2D>("SpecialAttacks").GetChildren().Cast<SpecialAttack>())
             special.CharacterPlay += (anim) => { Player.Play(anim); CanMove = false; };
-        foreach (NormalAttack normal in GetNode<Node>("NormalAttacks").GetChildren().Cast<NormalAttack>())
+        foreach (NormalAttack normal in GetNode<Node2D>("NormalAttacks").GetChildren().Cast<NormalAttack>())
             normal.CharacterPlay += (anim) => { Player.Play(anim); CanMove = false; };
         animations.AddRange(Player.GetAnimationList()); }
 
