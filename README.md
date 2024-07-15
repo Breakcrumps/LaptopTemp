@@ -1,4 +1,4 @@
-# A small C# Godot v4.3.beta2 project that helps me learn all the things needed to create a fighter.
+# Do code, life good.
 ## Code spec:
 - Use 4 spaces.
 
