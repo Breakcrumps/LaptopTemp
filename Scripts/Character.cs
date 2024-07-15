@@ -6,6 +6,7 @@ abstract partial class Character : CharacterBody2D { //? Class that handles move
     //////////////////////////////
     //////////!Concrete!//////////
     //////////////////////////////
+
     //////////*Properties*//////////
     [Export]
     int Fws { get; set; } // Forward walk speed.

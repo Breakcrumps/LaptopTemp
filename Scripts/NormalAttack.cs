@@ -12,7 +12,6 @@ abstract partial class NormalAttack : Area2D { //? Class that handles normal att
     private protected abstract string Button { get; } // Button itself.
 
 
-
     //////////////////////////////
     //////////!Concrete!//////////
     //////////////////////////////
