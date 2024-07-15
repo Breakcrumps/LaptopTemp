@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://157x0k1xcww0"]
+[gd_scene load_steps=19 format=3 uid="uid://157x0k1xcww0"]
 
 [ext_resource type="Script" path="res://Characters/Job/Job.cs" id="1_3mggq"]
 [ext_resource type="Texture2D" uid="uid://yu1gbisr7kj2" path="res://Characters/Job/Job.png" id="2_ldte1"]
 [ext_resource type="PackedScene" uid="uid://bevr83iyqf75k" path="res://SpecialAttacks/Scenes/Hadou.tscn" id="3_ihebm"]
 [ext_resource type="PackedScene" uid="uid://cr4tq6nkcbls" path="res://SpecialAttacks/Scenes/Shoryu.tscn" id="4_kj1li"]
 [ext_resource type="PackedScene" uid="uid://btaxtsh5p12ab" path="res://SpecialAttacks/Scenes/Tatsu.tscn" id="5_5gpr7"]
+[ext_resource type="PackedScene" uid="uid://dr0kd3ga6ptxf" path="res://SpecialAttacks/Scenes/Half.tscn" id="6_kt4ct"]
 [ext_resource type="PackedScene" uid="uid://codo6j34a3cle" path="res://NormalAttacks/Scenes/nHP.tscn" id="6_uafns"]
 
 [sub_resource type="Animation" id="Animation_eugov"]
@@ -76,7 +77,7 @@ tracks/0/path = NodePath(".:CanMove")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.2),
+"times": PackedFloat32Array(0.166667),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
@@ -304,10 +305,10 @@ size = Vector2(22, 10)
 
 [node name="Job" type="CharacterBody2D"]
 script = ExtResource("1_3mggq")
-Fws = 150
-Bws = 100
+Fws = 200
+Bws = 170
 Health = 100
-Gravity = 10
+JumpHeight = 10
 JumpDuration = 38
 CanMove = true
 
@@ -338,6 +339,10 @@ shape = SubResource("RectangleShape2D_l78pw")
 [node name="Tatsu" parent="SpecialAttacks" instance=ExtResource("5_5gpr7")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SpecialAttacks/Tatsu"]
+
+[node name="Half" parent="SpecialAttacks" instance=ExtResource("6_kt4ct")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpecialAttacks/Half"]
 
 [node name="NormalAttacks" type="Node2D" parent="."]
 

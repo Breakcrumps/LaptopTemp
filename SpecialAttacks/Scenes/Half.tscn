@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dr0kd3ga6ptxf"]
+
+[ext_resource type="Script" path="res://SpecialAttacks/Scripts/Half.cs" id="1_atfv1"]
+
+[node name="Half" type="Area2D"]
+script = ExtResource("1_atfv1")

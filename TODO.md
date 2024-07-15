@@ -1,0 +1,1 @@
+- [ ] Relocate movement inputs to enums.

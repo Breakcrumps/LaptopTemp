@@ -1,59 +1,58 @@
 using Godot;
 using static Godot.Input;
-using System.Collections.Generic;
 using System.Linq;
 
-abstract partial class Character : CharacterBody2D {
+abstract partial class Character : CharacterBody2D { //? Class that handles movement and character characteristics.
     //////////////////////////////
     //////////!Concrete!//////////
     //////////////////////////////
-    
-    //////////*Fields*//////////
-    readonly List<string> animations = [];
-
     //////////*Properties*//////////
     [Export]
-    int Fws { get; set; }
+    int Fws { get; set; } // Forward walk speed.
     [Export]
-    int Bws { get; set; }
+    int Bws { get; set; } // Backward walk speed.
     [Export]
-    internal int Health { get; set; }
+    internal int Health { get; set; } // Internal gives access to attack classes.
     [Export]
-    int Gravity { get; set; }
+    int JumpHeight { get; set; } // Multiplier.
     [Export]
-    int JumpDuration { get; set; }
+    int JumpDuration { get; set; } // In frames. Fighters default to 60 FPS.
+    //? Use [Export] to export properties to Godot UI.
 
     [Export]
-    bool CanMove { get; set; }
+    bool CanMove { get; set; } // Flag that allows actions in _PhysicsUpdate(), mainly movement.
 
     AnimationPlayer Player => (AnimationPlayer)GetChildren().Where(x => x is AnimationPlayer).Single();
     // Yes, this is fucked. Welcome to fucking C#.
     
-    int VertSpeed => -JumpDuration/2*Gravity;
+    int Gravity => JumpHeight;
+    int VertSpeed => -JumpDuration/2*JumpHeight;
+    // Formula that calculates starting speed and makes the jump controllable.
 
     //////////*Methods*//////////
     public override void _Ready() {
-        CanMove = true;
+        CanMove = true; // Character can move from birth.
         foreach (SpecialAttack special in GetNode<Node2D>("SpecialAttacks").GetChildren().Cast<SpecialAttack>())
-            special.CharacterPlay += (anim) => { Player.Play(anim); CanMove = false; };
+            special.CharacterPlay += (anim) => { if (CanMove) { Player.Play(anim); CanMove = false; } };
         foreach (NormalAttack normal in GetNode<Node2D>("NormalAttacks").GetChildren().Cast<NormalAttack>())
-            normal.CharacterPlay += (anim) => { Player.Play(anim); CanMove = false; };
-        animations.AddRange(Player.GetAnimationList()); }
-
-    public override void _PhysicsProcess(double delta) {
-        Vector2 velocity = Velocity;
-        if (!IsOnFloor()) {
-            velocity.Y += Gravity;
+            normal.CharacterPlay += (anim) => { if (CanMove) { Player.Play(anim); CanMove = false; } }; }
+        // Two realisations for attack signals that allow attack to ask character to PLayer.Play() needed animation.
+            
+    public override void _PhysicsProcess(double delta) { //? 60 times a second.
+        Vector2 velocity = Velocity; // Point of contention, but Velocity is not obviously Vector2.
+        // C# specialty. You branch velocity from Velocity and then merge. Blah-blah info hiding, blah-blah encapsulation.
+        if (!IsOnFloor()) { //? Executed when airborne.
+            velocity.Y += Gravity; // Apply gravity.
             Velocity = velocity;
-            MoveAndSlide();
+            MoveAndSlide(); // Call MoveAndSlide() at the point where Velocity is finalised to move the character.
             return; }
-        if (!CanMove)  return;
-        velocity.X = 0;
+        if (!CanMove)  return; // Don do shit when animating and shit.
+        velocity.X = 0; // So that the character does not accelerate to heavens.
         if (IsActionPressed("Left") != IsActionPressed("Right")) {
             if (IsActionPressed("Left"))  velocity.X -= Bws;
-            if (IsActionPressed("Right"))  velocity.X += Fws; }
+            if (IsActionPressed("Right"))  velocity.X += Fws; } // Feels bad.
         if (IsActionJustPressed("Jump")) {
-            velocity.Y = VertSpeed;
+            velocity.Y = VertSpeed; // Give the character Y momentum.
             Velocity = velocity;
             MoveAndSlide();
             return; }
