@@ -1,6 +1,7 @@
 using Godot;
 using static Godot.Input;
 using System.Linq;
+using System.Collections;
 
 abstract partial class Character : CharacterBody2D { //? Class that handles movement and character characteristics.
     //////////////////////////////
@@ -23,12 +24,17 @@ abstract partial class Character : CharacterBody2D { //? Class that handles move
     [Export]
     bool CanMove { get; set; } // Flag that allows actions in _PhysicsUpdate(), mainly movement.
 
-    AnimationPlayer Player => (AnimationPlayer)GetChildren().Where(x => x is AnimationPlayer).Single();
+    AnimationPlayer Player => (AnimationPlayer)GetChildren().Where(x => x is AnimationPlayer).First();
     // Yes, this is fucked. Welcome to fucking C#.
     
     int Gravity => JumpHeight;
     int VertSpeed => -JumpDuration/2*JumpHeight;
     // Formula that calculates starting speed and makes the jump controllable.
+
+    static bool Left => IsActionPressed("Left"); // Some performance bull crap.
+    static bool Right => IsActionPressed("Right");
+    static bool Jump => IsActionPressed("Jump");
+    static bool Down => IsActionPressed("Down");
 
     //////////*Methods*//////////
     public override void _Ready() {
@@ -49,10 +55,10 @@ abstract partial class Character : CharacterBody2D { //? Class that handles move
             return; }
         if (!CanMove)  return; // Don do shit when animating and shit.
         velocity.X = 0; // So that the character does not accelerate to heavens.
-        if (IsActionPressed("Left") != IsActionPressed("Right")) {
-            if (IsActionPressed("Left"))  velocity.X -= Bws;
-            if (IsActionPressed("Right"))  velocity.X += Fws; } // Feels bad.
-        if (IsActionJustPressed("Jump")) {
+        if (Left != Right) {
+            if (Left)  velocity.X -= Bws;
+            if (Right)  velocity.X += Fws; } // Feels bad.
+        if (Jump) {
             velocity.Y = VertSpeed; // Give the character Y momentum.
             Velocity = velocity;
             MoveAndSlide();

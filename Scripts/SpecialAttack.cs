@@ -39,7 +39,7 @@ abstract partial class SpecialAttack : Area2D { //? Class that handles special a
     Lvl Level { get; set; }
     //? Use [Export] to export properties to Godot UI.
 
-    CollisionShape2D Hitbox => (CollisionShape2D)GetChildren().Where(x => x is CollisionShape2D).Single();
+    CollisionShape2D Hitbox => (CollisionShape2D)GetChildren().Where(x => x is CollisionShape2D).First();
     // Fuck.
 
     //////////*Delegates*//////////

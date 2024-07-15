@@ -45,7 +45,7 @@ abstract partial class ChildClass(int neededInt, string neededString) : Area2D {
     int CalculatedValue => namedField * 2 + 1;
     // Follow conventions on mathematical operations. Use => to realise one line get-s and set-s.
 
-    AnimationPlayer Player => (AnimationPlayer)GetChildren().Where(x => x is AnimationPlayer).Single();
+    AnimationPlayer Player => (AnimationPlayer)GetChildren().Where(x => x is AnimationPlayer).First();
     // Prioritise unnamed calls when working with nodes. 
     //? AND YES, this is rather fucked. What am I to do?
 
