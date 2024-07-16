@@ -1,1 +1,1 @@
-- [ ] Relocate movement inputs to enums.
+- [x] Make DP inputtable with cool hitbox stuff.

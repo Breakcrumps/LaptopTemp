@@ -42,6 +42,15 @@ abstract partial class SpecialAttack : Area2D { //? Class that handles special a
     CollisionShape2D Hitbox => (CollisionShape2D)GetChildren().Where(x => x is CollisionShape2D).First();
     // Fuck.
 
+    static string DirX { get {
+        if (IsActionPressed("Left") && !IsActionPressed("Right"))  return "Left";
+        if (IsActionPressed("Right") && !IsActionPressed("Left"))  return "Right";
+        return "NeutralX"; } }
+    static string DirY { get {
+        if (IsActionPressed("Jump") && !IsActionPressed("Down"))  return "Jump";
+        if (IsActionPressed("Down") && !IsActionPressed("Jump"))  return "Down";
+        return "NeutralY"; } }
+
     //////////*Delegates*//////////
     [Signal]
     internal delegate void CharacterPlayEventHandler(string anim);
@@ -54,7 +63,7 @@ abstract partial class SpecialAttack : Area2D { //? Class that handles special a
 
     public override void _PhysicsProcess(double delta) {
         List<string> frameList = [];
-        frameList.AddRange(actions.Where(str => IsActionPressed(str)));
+        frameList.AddRange(actions.Where(str => DirX == str || DirY == str));
         // Add inputted items from actions.
         buffer.Add(frameList);
         if (buffer.Count > maxBuffer)  buffer.RemoveAt(0);

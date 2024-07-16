@@ -31,10 +31,14 @@ abstract partial class Character : CharacterBody2D { //? Class that handles move
     int VertSpeed => -JumpDuration/2*JumpHeight;
     // Formula that calculates starting speed and makes the jump controllable.
 
-    static bool Left => IsActionPressed("Left"); // Some performance bull crap.
-    static bool Right => IsActionPressed("Right");
-    static bool Jump => IsActionPressed("Jump");
-    static bool Down => IsActionPressed("Down");
+    static string DirX { get {
+        if (IsActionPressed("Left") && !IsActionPressed("Right"))  return "Left";
+        if (IsActionPressed("Right") && !IsActionPressed("Left"))  return "Right";
+        return "NeutralX"; } }
+    static string DirY { get {
+        if (IsActionPressed("Jump") && !IsActionPressed("Down"))  return "Jump";
+        if (IsActionPressed("Down") && !IsActionPressed("Jump"))  return "Down";
+        return "NeutralY"; } }
 
     //////////*Methods*//////////
     public override void _Ready() {
@@ -55,10 +59,9 @@ abstract partial class Character : CharacterBody2D { //? Class that handles move
             return; }
         if (!CanMove)  return; // Don do shit when animating and shit.
         velocity.X = 0; // So that the character does not accelerate to heavens.
-        if (Left != Right) {
-            if (Left)  velocity.X -= Bws;
-            if (Right)  velocity.X += Fws; } // Feels bad.
-        if (Jump) {
+        if (DirX == "Left")  velocity.X -= Bws;
+        if (DirX == "Right")  velocity.X += Fws;
+        if (DirY == "Jump") {
             velocity.Y = VertSpeed; // Give the character Y momentum.
             Velocity = velocity;
             MoveAndSlide();
