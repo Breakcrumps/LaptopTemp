@@ -1,9 +1,8 @@
 using Godot;
 using static Godot.Input;
 using System.Linq;
-using System.Collections;
 
-abstract partial class Character : CharacterBody2D { //? Class that handles movement and character characteristics.
+partial class Character : CharacterBody2D { //? Class that handles movement and character characteristics.
     //////////////////////////////
     //////////!Concrete!//////////
     //////////////////////////////
@@ -14,7 +13,7 @@ abstract partial class Character : CharacterBody2D { //? Class that handles move
     [Export]
     int Bws { get; set; } // Backward walk speed.
     [Export]
-    internal int Health { get; set; } // Internal gives access to attack classes.
+    internal int Health { get; set; } // Internal allows access for attack classes here.
     [Export]
     int JumpHeight { get; set; } // Multiplier.
     [Export]
@@ -24,9 +23,9 @@ abstract partial class Character : CharacterBody2D { //? Class that handles move
     [Export]
     bool CanMove { get; set; } // Flag that allows actions in _PhysicsUpdate(), mainly movement.
 
-    AnimationPlayer Player => (AnimationPlayer)GetChildren().Where(x => x is AnimationPlayer).First();
+    internal AnimationPlayer Player => (AnimationPlayer)GetChildren().Where(x => x is AnimationPlayer).First();
     // Yes, this is fucked. Welcome to fucking C#.
-    
+
     int Gravity => JumpHeight;
     int VertSpeed => -JumpDuration/2*JumpHeight;
     // Formula that calculates starting speed and makes the jump controllable.
@@ -44,10 +43,10 @@ abstract partial class Character : CharacterBody2D { //? Class that handles move
     public override void _Ready() {
         CanMove = true; // Character can move from birth.
         foreach (SpecialAttack special in GetNode<Node2D>("SpecialAttacks").GetChildren().Cast<SpecialAttack>())
-            special.CharacterPlay += (anim) => { if (CanMove) { Player.Play(anim); CanMove = false; } };
+            special.CharacterPlay += (anim) => { if (CanMove)  Player.Play(anim); };
         foreach (NormalAttack normal in GetNode<Node2D>("NormalAttacks").GetChildren().Cast<NormalAttack>())
-            normal.CharacterPlay += (anim) => { if (CanMove) { Player.Play(anim); CanMove = false; } }; }
-        // Two realisations for attack signals that allow attack to ask character to PLayer.Play() needed animation.
+            normal.CharacterPlay += (anim) => { if (CanMove)  Player.Play(anim); }; }
+        // Two realisations for attack signals that allow attacks to ask character to PLayer.Play() needed animation.
             
     public override void _PhysicsProcess(double delta) { //? 60 times a second.
         Vector2 velocity = Velocity; // Point of contention, but Velocity is not obviously Vector2.
@@ -61,7 +60,7 @@ abstract partial class Character : CharacterBody2D { //? Class that handles move
         velocity.X = 0; // So that the character does not accelerate to heavens.
         if (DirX == "Left")  velocity.X -= Bws;
         if (DirX == "Right")  velocity.X += Fws;
-        if (DirY == "Jump") {
+        if (IsActionJustPressed("Jump")) {
             velocity.Y = VertSpeed; // Give the character Y momentum.
             Velocity = velocity;
             MoveAndSlide();

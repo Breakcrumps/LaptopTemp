@@ -1,0 +1,93 @@
+[gd_scene load_steps=8 format=3 uid="uid://culi6sxrtc0ux"]
+
+[ext_resource type="Script" path="res://Scripts/Character.cs" id="1_218tg"]
+[ext_resource type="Texture2D" uid="uid://dmjfx2nkp6hpo" path="res://Characters/Question/Question.png" id="2_xsrlc"]
+
+[sub_resource type="Animation" id="Animation_uwjtg"]
+resource_name = "Hit4"
+length = 0.600003
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:CanMove")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_wacsy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:CanMove")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_n73kq"]
+resource_name = "Idle"
+length = 0.001
+loop_mode = 1
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xylbx"]
+_data = {
+"Hit4": SubResource("Animation_uwjtg"),
+"Idle": SubResource("Animation_n73kq"),
+"RESET": SubResource("Animation_wacsy")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gv834"]
+size = Vector2(72, 92)
+
+[node name="Question" type="CharacterBody2D"]
+script = ExtResource("1_218tg")
+Health = 100
+JumpHeight = 10
+JumpDuration = 38
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_xsrlc")
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xylbx")
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-12, -3)
+shape = SubResource("RectangleShape2D_gv834")

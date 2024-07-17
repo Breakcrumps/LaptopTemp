@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=4 uid="uid://6bmmgvshgcfu"]
+[gd_scene load_steps=6 format=4 uid="uid://6bmmgvshgcfu"]
 
 [ext_resource type="Texture2D" uid="uid://d0flfy8g4idcg" path="res://unnamed.png" id="2_wgtph"]
 [ext_resource type="PackedScene" uid="uid://157x0k1xcww0" path="res://Characters/Job/Job.tscn" id="2_xqe3t"]
+[ext_resource type="PackedScene" uid="uid://culi6sxrtc0ux" path="res://Characters/Question/Question.tscn" id="3_3fi6e"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ygk1c"]
 texture = ExtResource("2_wgtph")
@@ -720,4 +721,9 @@ tile_map_data = PackedByteArray("AABv/0AAAAABAAAAAABv/0EAAAABAAEAAABv/0IAAAABAAI
 tile_set = SubResource("TileSet_2jecp")
 
 [node name="Job" parent="." instance=ExtResource("2_xqe3t")]
+position = Vector2(-200, 0)
 scale = Vector2(5, 5)
+
+[node name="Question" parent="." instance=ExtResource("3_3fi6e")]
+position = Vector2(200, 0)
+scale = Vector2(3, 3)
