@@ -48,7 +48,9 @@ partial class Character : CharacterBody2D { //? Class that handles movement and 
         foreach (SpecialAttack special in GetNode<Node2D>("SpecialAttacks").GetChildren().Cast<SpecialAttack>())
             special.CharacterPlay += (anim) => { if (CanMove)  Player.Play(anim); };
         foreach (NormalAttack normal in GetNode<Node2D>("NormalAttacks").GetChildren().Cast<NormalAttack>())
-            normal.CharacterPlay += (anim) => { if (CanMove)  Player.Play(anim); }; }
+            normal.CharacterPlay += (anim) => { if (CanMove && IsOnFloor())  Player.Play(anim); };
+        foreach (NormalAttack air in GetNode<Node2D>("AirAttacks").GetChildren().Cast<NormalAttack>())
+            air.CharacterPlay += (anim) => { if (CanMove && !IsOnFloor())  Player.Play(anim); }; }
         // Two realisations for attack signals that allow attacks to ask character to PLayer.Play() needed animation.
             
     public override void _PhysicsProcess(double delta) { //? 60 times a second.
@@ -59,7 +61,7 @@ partial class Character : CharacterBody2D { //? Class that handles movement and 
             Velocity = velocity;
             MoveAndSlide(); // Call MoveAndSlide() at the point where Velocity is finalised to move the character.
             return; }
-        if (!CanMove) { return; }// Don do shit when animating and shit.
+        if (!CanMove)  return; // Don do shit when animating and shit.
         if (DirY == 1) { Player.Play("RESET"); return; }
         velocity.X = 0; // So that the character does not accelerate to heavens.
         if (DirX == 1)  velocity.X -= Bws;

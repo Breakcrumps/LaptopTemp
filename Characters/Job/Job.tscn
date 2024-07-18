@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://157x0k1xcww0"]
+[gd_scene load_steps=23 format=3 uid="uid://157x0k1xcww0"]
 
 [ext_resource type="Script" path="res://Scripts/Character.cs" id="1_ub5co"]
 [ext_resource type="Texture2D" uid="uid://yu1gbisr7kj2" path="res://Characters/Job/Job.png" id="2_ldte1"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://dr0kd3ga6ptxf" path="res://SpecialAttacks/Scenes/Half.tscn" id="6_kt4ct"]
 [ext_resource type="PackedScene" uid="uid://codo6j34a3cle" path="res://NormalAttacks/Scenes/nHP.tscn" id="6_uafns"]
 [ext_resource type="PackedScene" uid="uid://dh1obyinktmcb" path="res://SpecialAttacks/Scenes/Strive.tscn" id="7_wiole"]
+[ext_resource type="PackedScene" uid="uid://cl1dsysm5b5a5" path="res://NormalAttacks/Scenes/jHP.tscn" id="9_6w827"]
 
 [sub_resource type="Animation" id="Animation_iehyn"]
 resource_name = "Hadou"
@@ -327,6 +328,23 @@ tracks/1/keys = {
 "values": [false, true]
 }
 
+[sub_resource type="Animation" id="Animation_aw36u"]
+resource_name = "jHP"
+length = 0.166668
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:flip_h")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_a3mee"]
 _data = {
 "Hadou": SubResource("Animation_iehyn"),
@@ -337,6 +355,7 @@ _data = {
 "Strive": SubResource("Animation_ifopr"),
 "Tatsu": SubResource("Animation_eugov"),
 "Walk": SubResource("Animation_kx3yn"),
+"jHP": SubResource("Animation_aw36u"),
 "nHP": SubResource("Animation_nri6s")
 }
 
@@ -401,3 +420,9 @@ Level = 4
 position = Vector2(39, -14)
 shape = SubResource("RectangleShape2D_ypgpo")
 disabled = true
+
+[node name="AirAttacks" type="Node2D" parent="."]
+
+[node name="jHP" parent="AirAttacks" instance=ExtResource("9_6w827")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AirAttacks/jHP"]
