@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://culi6sxrtc0ux"]
+[gd_scene load_steps=7 format=3 uid="uid://culi6sxrtc0ux"]
 
 [ext_resource type="Script" path="res://Scripts/Character.cs" id="1_218tg"]
 [ext_resource type="Texture2D" uid="uid://dmjfx2nkp6hpo" path="res://Characters/Question/Question.png" id="2_xsrlc"]
@@ -58,15 +58,9 @@ tracks/1/keys = {
 "values": [false]
 }
 
-[sub_resource type="Animation" id="Animation_n73kq"]
-resource_name = "Idle"
-length = 0.001
-loop_mode = 1
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xylbx"]
 _data = {
 "Hit4": SubResource("Animation_uwjtg"),
-"Idle": SubResource("Animation_n73kq"),
 "RESET": SubResource("Animation_wacsy")
 }
 

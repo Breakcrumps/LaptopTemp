@@ -57,15 +57,7 @@ abstract partial class NormalAttack : Area2D { //? Class that handles normal att
     void DealDamage(Node2D body) { //? Realise the BodyEntered signal to deal damage and stun!
         var intruder = (Character)body; // Cast Node2D to character to use class Character members.
         Hitbox.SetDeferred("Disabled", true); // Turn the hitbox off after first collision.
-        switch (DirX == 2) {
-            case false:
-                intruder.Health -= Damage;
-                intruder.Player.Play($"Hit{(int)Level}");
-                goto default;
-            case true:
-                intruder.Health -= Block;
-                goto default;
-            default:
-                if (intruder.Health <= 0)  intruder.QueueFree();
-                break; } } // Check block and die if dead.
+        intruder.Health -= Damage;
+        intruder.Player.Play($"Hit{(int)Level}");
+        if (intruder.Health <= 0)  intruder.QueueFree(); }
 }

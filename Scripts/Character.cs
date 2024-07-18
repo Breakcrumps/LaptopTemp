@@ -38,6 +38,9 @@ partial class Character : CharacterBody2D { //? Class that handles movement and 
         if (IsActionPressed("Jump") && !IsActionPressed("Down"))  return 2;
         if (IsActionPressed("Down") && !IsActionPressed("Jump"))  return 1;
         return 0; } }
+    /* 21 20 22
+       01 00 02
+       11 10 12 */
 
     //////////*Methods*//////////
     public override void _Ready() {
@@ -56,8 +59,8 @@ partial class Character : CharacterBody2D { //? Class that handles movement and 
             Velocity = velocity;
             MoveAndSlide(); // Call MoveAndSlide() at the point where Velocity is finalised to move the character.
             return; }
-        if (!CanMove)  return; // Don do shit when animating and shit.
-        if (DirY == 1) { Player.Stop(); return; }
+        if (!CanMove) { return; }// Don do shit when animating and shit.
+        if (DirY == 1) { Player.Play("RESET"); return; }
         velocity.X = 0; // So that the character does not accelerate to heavens.
         if (DirX == 1)  velocity.X -= Bws;
         if (DirX == 2)  velocity.X += Fws;
@@ -67,8 +70,8 @@ partial class Character : CharacterBody2D { //? Class that handles movement and 
             MoveAndSlide();
             return; }
         Velocity = velocity;
-        if (Velocity != Vector2.Zero)  SafePlay("Walk");
-        else  SafePlay("Idle");
+        if (Velocity != Vector2.Zero) { SafePlay("Walk"); }
+        else { SafePlay("Idle"); }
         MoveAndSlide(); }
     
     void SafePlay(string anim) {
