@@ -31,14 +31,14 @@ abstract partial class NormalAttack : Area2D { //? Class that handles normal att
     CollisionShape2D Hitbox => (CollisionShape2D)GetChildren().Where(x => x is CollisionShape2D).First();
     // Fuck.
 
-    static string DirX { get {
-        if (IsActionPressed("Left") && !IsActionPressed("Right"))  return "Left";
-        if (IsActionPressed("Right") && !IsActionPressed("Left"))  return "Right";
-        return "NeutralX"; } }
-    static string DirY { get {
-        if (IsActionPressed("Jump") && !IsActionPressed("Down"))  return "Jump";
-        if (IsActionPressed("Down") && !IsActionPressed("Jump"))  return "Down";
-        return "NeutralY"; } }
+    static int DirX { get {
+        if (IsActionPressed("Left") && !IsActionPressed("Right"))  return 1;
+        if (IsActionPressed("Right") && !IsActionPressed("Left"))  return 2;
+        return 0; } }
+    static int DirY { get {
+        if (IsActionPressed("Jump") && !IsActionPressed("Down"))  return 2;
+        if (IsActionPressed("Down") && !IsActionPressed("Jump"))  return 1;
+        return 0; } }
 
     //////////*Delegates*//////////
     [Signal]
@@ -57,7 +57,7 @@ abstract partial class NormalAttack : Area2D { //? Class that handles normal att
     void DealDamage(Node2D body) { //? Realise the BodyEntered signal to deal damage and stun!
         var intruder = (Character)body; // Cast Node2D to character to use class Character members.
         Hitbox.SetDeferred("Disabled", true); // Turn the hitbox off after first collision.
-        switch (DirX == "Right") {
+        switch (DirX == 2) {
             case false:
                 intruder.Health -= Damage;
                 intruder.Player.Play($"Hit{(int)Level}");

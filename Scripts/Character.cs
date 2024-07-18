@@ -30,14 +30,14 @@ partial class Character : CharacterBody2D { //? Class that handles movement and 
     int VertSpeed => -JumpDuration/2*JumpHeight;
     // Formula that calculates starting speed and makes the jump controllable.
 
-    static string DirX { get {
-        if (IsActionPressed("Left") && !IsActionPressed("Right"))  return "Left";
-        if (IsActionPressed("Right") && !IsActionPressed("Left"))  return "Right";
-        return "NeutralX"; } }
-    static string DirY { get {
-        if (IsActionPressed("Jump") && !IsActionPressed("Down"))  return "Jump";
-        if (IsActionPressed("Down") && !IsActionPressed("Jump"))  return "Down";
-        return "NeutralY"; } }
+    static int DirX { get {
+        if (IsActionPressed("Left") && !IsActionPressed("Right"))  return 1;
+        if (IsActionPressed("Right") && !IsActionPressed("Left"))  return 2;
+        return 0; } }
+    static int DirY { get {
+        if (IsActionPressed("Jump") && !IsActionPressed("Down"))  return 2;
+        if (IsActionPressed("Down") && !IsActionPressed("Jump"))  return 1;
+        return 0; } }
 
     //////////*Methods*//////////
     public override void _Ready() {
@@ -57,16 +57,21 @@ partial class Character : CharacterBody2D { //? Class that handles movement and 
             MoveAndSlide(); // Call MoveAndSlide() at the point where Velocity is finalised to move the character.
             return; }
         if (!CanMove)  return; // Don do shit when animating and shit.
+        if (DirY == 1) { Player.Stop(); return; }
         velocity.X = 0; // So that the character does not accelerate to heavens.
-        if (DirX == "Left")  velocity.X -= Bws;
-        if (DirX == "Right")  velocity.X += Fws;
+        if (DirX == 1)  velocity.X -= Bws;
+        if (DirX == 2)  velocity.X += Fws;
         if (IsActionJustPressed("Jump")) {
             velocity.Y = VertSpeed; // Give the character Y momentum.
             Velocity = velocity;
             MoveAndSlide();
             return; }
         Velocity = velocity;
-        if (Velocity != Vector2.Zero)  Player.Play("Walk");
-        else  Player.Play("Idle");
+        if (Velocity != Vector2.Zero)  SafePlay("Walk");
+        else  SafePlay("Idle");
         MoveAndSlide(); }
+    
+    void SafePlay(string anim) {
+        if (Player.GetAnimationList().Contains(anim))
+            Player.Play(anim); }
 }

@@ -11,7 +11,7 @@ abstract partial class SpecialAttack : Area2D { //? Class that handles special a
     //////////*Properties*//////////
     private protected abstract string Animation { get; } // Animation name, to be identical to the one in the player.
 
-    private protected abstract string[] Motions { get; } // Things you want inputted before the button press.
+    private protected abstract int[] Motions { get; } // Things you want inputted before the button press.
     private protected abstract string Button { get; } // Button itself.
 
 
@@ -25,7 +25,7 @@ abstract partial class SpecialAttack : Area2D { //? Class that handles special a
     //////////*Fields*//////////
     readonly string[] actions = ["Left", "Right", "Down"]; // Actions that make it to the buffer.
 
-    readonly List<List<string>> buffer = []; // Da man.
+    readonly List<int> buffer = []; // Da man.
     
     //////////*Properties*//////////
     [Export] 
@@ -41,14 +41,17 @@ abstract partial class SpecialAttack : Area2D { //? Class that handles special a
     CollisionShape2D Hitbox => (CollisionShape2D)GetChildren().Where(x => x is CollisionShape2D).First();
     // Fuck.
 
-    static string DirX { get {
-        if (IsActionPressed("Left") && !IsActionPressed("Right"))  return "Left";
-        if (IsActionPressed("Right") && !IsActionPressed("Left"))  return "Right";
-        return "NeutralX"; } }
-    static string DirY { get {
-        if (IsActionPressed("Jump") && !IsActionPressed("Down"))  return "Jump";
-        if (IsActionPressed("Down") && !IsActionPressed("Jump"))  return "Down";
-        return "NeutralY"; } }
+    static int DirX { get {
+        if (IsActionPressed("Left") && !IsActionPressed("Right"))  return 1;
+        if (IsActionPressed("Right") && !IsActionPressed("Left"))  return 2;
+        return 0; } }
+    static int DirY { get {
+        if (IsActionPressed("Jump") && !IsActionPressed("Down"))  return 2;
+        if (IsActionPressed("Down") && !IsActionPressed("Jump"))  return 1;
+        return 0; } }
+    /* 21 20 22
+       01 00 02
+       11 10 12 */
 
     //////////*Delegates*//////////
     [Signal]
@@ -61,10 +64,7 @@ abstract partial class SpecialAttack : Area2D { //? Class that handles special a
         Hitbox.Disabled = true; }
 
     public override void _PhysicsProcess(double delta) {
-        List<string> frameList = [];
-        frameList.AddRange(actions.Where(str => DirX == str || DirY == str));
-        // Add inputted items from actions.
-        buffer.Add(frameList);
+        buffer.Add(DirY * 10 + DirX);
         if (buffer.Count > MaxBuffer)  buffer.RemoveAt(0);
         AttackBuffer(); }
     
@@ -72,20 +72,11 @@ abstract partial class SpecialAttack : Area2D { //? Class that handles special a
         if (!IsActionJustPressed(Button))  return;
         var currentActionIndex = 0; // Action index to be increased on successfully found input.
         for (var frame = 0; frame < buffer.Count; frame++) {
-            if (currentActionIndex == Motions.Length - 1) {
-                if (AttackBufferCheckLastInput(frame))  return;
-                continue; } // If on the last action, search for the last input without the previous and play!
-            if (buffer[frame].Contains(Motions[currentActionIndex])
-            && !buffer[frame].Contains(Motions[currentActionIndex+1]))
-                currentActionIndex += 1; } } /* Dive into the frame and -> 
-            if it contains the needed action without the next one, move to the next action! */
-
-    bool AttackBufferCheckLastInput(int frame) {
-        if (buffer[frame].Contains(Motions[^1]) 
-        && !buffer[frame].Contains(Motions[^2])) {
-            EmitSignal("CharacterPlay", Animation);
-            return true; }
-        return false; }
+            if (buffer[frame] == Motions[currentActionIndex])
+                currentActionIndex += 1; // Move on to the next action with the current found...
+            if (currentActionIndex == Motions.Length) { // But check if it was the last beforehand.
+                EmitSignal("CharacterPlay", Animation);
+                return; } } }
 
     void DealDamage(Node2D body) { //? Realise the BodyEntered signal to deal damage and stun!
         var intruder = (Character)body; // Cast Node2D to character to use class Character members.
