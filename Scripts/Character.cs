@@ -23,7 +23,7 @@ partial class Character : CharacterBody2D { //? Class that handles movement and 
     [Export]
     bool CanMove { get; set; } // Flag that allows actions in _PhysicsUpdate(), mainly movement.
 
-    internal AnimationPlayer Player => (AnimationPlayer)GetChildren().Where(x => x is AnimationPlayer).First();
+    internal AnimationPlayer Player => GetNode<AnimationPlayer>("AnimationPlayer");
     // Yes, this is fucked. Welcome to fucking C#.
 
     int Gravity => JumpHeight;

@@ -28,7 +28,7 @@ abstract partial class NormalAttack : Area2D { //? Class that handles normal att
     Lvl Level { get; set; }
     //? Use [Export] to export properties to Godot UI.
 
-    CollisionShape2D Hitbox => (CollisionShape2D)GetChildren().Where(x => x is CollisionShape2D).First();
+    CollisionShape2D Hitbox => GetNode<CollisionShape2D>("CollisionShape2D");
     // Fuck.
 
     static int DirX { get {

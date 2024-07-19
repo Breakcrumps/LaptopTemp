@@ -23,8 +23,6 @@ abstract partial class SpecialAttack : Area2D { //? Class that handles special a
     enum Lvl { One = 1, Two, Three, Four } // Attack level that holds stun info.
 
     //////////*Fields*//////////
-    readonly string[] actions = ["Left", "Right", "Down"]; // Actions that make it to the buffer.
-
     readonly List<int> buffer = []; // Da man.
     
     //////////*Properties*//////////
@@ -38,7 +36,7 @@ abstract partial class SpecialAttack : Area2D { //? Class that handles special a
 
     private protected virtual int MaxBuffer => 15; // How many frames the buffer lasts.
 
-    CollisionShape2D Hitbox => (CollisionShape2D)GetChildren().Where(x => x is CollisionShape2D).First();
+    CollisionShape2D Hitbox => GetNode<CollisionShape2D>("CollisionShape2D");
     // Fuck.
 
     static int DirX { get {
@@ -80,15 +78,8 @@ abstract partial class SpecialAttack : Area2D { //? Class that handles special a
 
     void DealDamage(Node2D body) { //? Realise the BodyEntered signal to deal damage and stun!
         var intruder = (Character)body; // Cast Node2D to character to use class Character members.
-        Hitbox.Disabled = true; // Turn the hitbox off after the first collision.
-        switch (IsActionPressed("Right")) {
-            case true:
-                intruder.Health -= Damage;
-                goto default;
-            case false:
-                intruder.Health -= Block;
-                goto default;
-            default:
-                if (intruder.Health <= 0)  intruder.QueueFree();
-                break; } } // Check block and die if dead.
+        Hitbox.SetDeferred("Disabled", true); // Turn the hitbox off after first collision.
+        intruder.Health -= Damage;
+        intruder.Player.Play($"Hit{(int)Level}");
+        if (intruder.Health <= 0)  intruder.QueueFree(); }
 }
