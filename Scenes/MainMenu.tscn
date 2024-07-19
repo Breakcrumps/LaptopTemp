@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjbwh7cdnctp5"]
+
+[ext_resource type="Script" path="res://Scenes/MainMenu.cs" id="1_o3htw"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_o3htw")
+
+[node name="Start" type="Button" parent="."]
+offset_left = -48.0
+offset_top = -25.0
+offset_right = 48.0
+offset_bottom = 6.0
+text = "Start Game"
+
+[node name="Exit" type="Button" parent="."]
+offset_left = -46.0
+offset_top = 25.0
+offset_right = 46.0
+offset_bottom = 56.0
+pivot_offset = Vector2(46, 15)
+text = "Quit Game"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
